@@ -1,17 +1,22 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"bufio"
+	"os"
+	"strconv"
+)
 
 func main() {
-	const foo = 'h'
-	const bar = 'e'
-	fmt.Printf("Is type %T \n", foo)
-	fmt.Println(foo)
-	fmt.Println(bar)
-	fmt.Println(foo + bar)
-
-	var baz = 4.20
-	fmt.Printf("is %T\n", baz)
-
-	fmt.Printf("I am feeling 70%% today\n")
+  // try to get name, and add a greeting to it
+  scanner := bufio.NewScanner(os.Stdin)
+	fmt.Print("Please type your name here: ")
+	scanner.Scan()
+	input := scanner.Text()
+	fmt.Printf("Good morning %v!!\n", input)
+	
+	fmt.Print("What year were you born? ")
+	scanner.Scan()
+	secondInput, _ := strconv.ParseInt(scanner.Text(), 10, 32)
+	fmt.Printf("You are %d years old!\n", 2022 - secondInput)
 }
