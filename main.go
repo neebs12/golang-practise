@@ -1,40 +1,28 @@
 package main
 
-import (
-	"fmt"
-)
+import "fmt"
 
-func myCounterFromStart() (func() int, *int) {
-	var counter int
-	return func() int {
-		counter += 1
-		return counter
-	}, &counter
+func doubleFirstSliElm(s []int) {
+	s[0] = 100
+}
+
+func doubleMpPropByPropName(myMap map[string]int, name string) {
+	myMap[name] = myMap[name] * 2
 }
 
 func main() {
-	foo := 6
-	fmt.Println(&foo, foo)
+	sli := []int{11, 22, 33, 44}
+	fmt.Println(sli)
+	doubleFirstSliElm(sli)
+	fmt.Println(sli) // <--- works
 
-	var bar *int = &foo
-	fmt.Println(bar, foo)
-	fmt.Println(&bar, bar, foo)
-	*bar = 600
-	fmt.Println(foo)
+	mp := map[string]int{
+		"apple":  50,
+		"orange": 500,
+	}
 
-	var baz **int = &bar
-	fmt.Println(&bar, bar, foo)
-	fmt.Println(baz, bar, foo)
+	fmt.Println(mp)
+	doubleMpPropByPropName(mp, "apple")
+	fmt.Println(mp)
 
-	cnt, cntPtr := myCounterFromStart()
-
-	fmt.Println(cntPtr, cnt())
-	fmt.Println(cntPtr, cnt())
-	fmt.Println(cntPtr, cnt())
-
-	*cntPtr = 100
-
-	fmt.Println(cntPtr, cnt())
-	fmt.Println(cntPtr, cnt())
-	fmt.Println(cntPtr, cnt())
 }
