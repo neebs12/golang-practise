@@ -25,12 +25,16 @@ type Circle3 struct {
 func changeXValue(pt Point) {
 	// <--- pt creates a copy
 	pt.x = 9.001
-	fmt.Println(pt)
+	// fmt.Println(pt)
 }
 
 func changeXValue2(pt *Point) {
 	(*pt).x = 23.001 // valid
 	pt.x = 25.251    // valid - shorthand
+}
+
+func changeRadius(cPtr *Circle3) {
+	cPtr.radius = 420.001
 }
 
 func main() {
@@ -55,8 +59,6 @@ func main() {
 
 	var myCircle *Circle = &Circle{4.2, Point{11.1, 11.2}}
 	fmt.Println(myCircle)
-	fmt.Println(myCircle, myCircle.radius, myCircle.center)
-	fmt.Println(myCircle.center.x, myCircle.center.y)
 	changeXValue(myCircle.center)
 	fmt.Println(myCircle)
 
@@ -75,4 +77,9 @@ func main() {
 	// changeXValue2(myCircle3)
 	// <--- error: mismatched argument types
 	// <--- from *Circle(arg) to *Point(param def)
+
+	myCircle4 := Circle3{9.001, &Point{4.002, 5.001}}
+	fmt.Println(myCircle4)
+	changeRadius(&myCircle4)
+	fmt.Println(myCircle4)
 }
