@@ -4,11 +4,37 @@ import (
 	"fmt"
 )
 
-func main() {
-	arr := [2]int{11, 22}
-	arr2 := arr
+func myCounterFromStart() (func() int, *int) {
+	var counter int
+	return func() int {
+		counter += 1
+		return counter
+	}, &counter
+}
 
-	fmt.Println(arr, arr2) // [11, 22] [11, 22]
-	arr[0] = 1000
-	fmt.Println(arr, arr2) // [1000, 22] [11, 22]
+func main() {
+	foo := 6
+	fmt.Println(&foo, foo)
+
+	var bar *int = &foo
+	fmt.Println(bar, foo)
+	fmt.Println(&bar, bar, foo)
+	*bar = 600
+	fmt.Println(foo)
+
+	var baz **int = &bar
+	fmt.Println(&bar, bar, foo)
+	fmt.Println(baz, bar, foo)
+
+	cnt, cntPtr := myCounterFromStart()
+
+	fmt.Println(cntPtr, cnt())
+	fmt.Println(cntPtr, cnt())
+	fmt.Println(cntPtr, cnt())
+
+	*cntPtr = 100
+
+	fmt.Println(cntPtr, cnt())
+	fmt.Println(cntPtr, cnt())
+	fmt.Println(cntPtr, cnt())
 }
