@@ -73,5 +73,6 @@ func main() {
 	myCircle3 := &Circle3{9.001, &Point{4.002, 5.001}}
 	fmt.Println(myCircle3, myCircle3.x, myCircle3.y)
 	// changeXValue2(myCircle3)
-	// <--- error: mismatched argument types from *Circle(arg) to *Point(param def)
+	// <--- error: mismatched argument types
+	// <--- from *Circle(arg) to *Point(param def)
 }
