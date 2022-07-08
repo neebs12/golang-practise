@@ -5,20 +5,28 @@ import (
 )
 
 func main() {
-  // try to get name, and add a greeting to it
-	var num1, num2 int = 99, 5
-	num3 := num1 / num2
-	fmt.Printf("the number is %d\n", num3)
+	var arr [3]int
+	// arr = {11, 22, 33} // <-- no
+	// arr = [11, 22, 33] // <-- no
+	arr[0] = 11 // yes
+	arr[1] = 22
+	arr[2] = 33 
+	fmt.Println(arr, len(arr))
 
-	num4 := float32(num1) / float32(num2)
-	fmt.Printf("the number is %.2f\n", num4)
+	sum := 0
+	for i := 0; i < len(arr); i += 1{
+		sum += arr[i]
+	}
+	fmt.Println(sum)
 
-	// num5 := num1 / float32(num2) 
-	// <--- error due to mismatched types
+	arr2D := [3][2]int{{11, 22}, {33, 44}, {55, 66}}
+	fmt.Println(arr2D, len(arr2D))
 
-	var num6 float32 = 3.2
-	var num7 int = 3
-	// fmt.Println("This is boolean: %t", num6 == num1)
-	// <--- error due to mismatched types
-	fmt.Printf("This is boolean: %t\n", int(num6) == num7)
+	sum = 0 // reassg
+	for i := 0 ; i < len(arr2D); i += 1{
+		for j := 0; j < len(arr2D[i]); j += 1{
+			sum += arr2D[i][j]
+		}
+	}
+	fmt.Println(sum)
 }
