@@ -2,84 +2,36 @@ package main
 
 import "fmt"
 
-type Point struct {
-	x float32
-	y float32
+type Student struct {
+	name          string
+	grades        []int
+	isFourthGrade bool
 }
 
-type Circle struct {
-	radius float32
-	center Point
+// Assign struct methods
+func (s Student) getName() string {
+	return s.name
 }
 
-type Circle2 struct {
-	radius float32
-	center *Point
+func (s *Student) setGrades(grades []int) {
+	// <--- note: is a pointer! this is to change values within the struct!
+	s.grades = grades
 }
 
-type Circle3 struct {
-	radius float32
-	*Point
-}
-
-func changeXValue(pt Point) {
-	// <--- pt creates a copy
-	pt.x = 9.001
-	// fmt.Println(pt)
-}
-
-func changeXValue2(pt *Point) {
-	(*pt).x = 23.001 // valid
-	pt.x = 25.251    // valid - shorthand
-}
-
-func changeRadius(cPtr *Circle3) {
-	cPtr.radius = 420.001
+func (s Student) getAverageGrade() float32 {
+	var sum int
+	for _, grade := range s.grades {
+		sum += grade
+	}
+	return float32(sum) / float32(len(s.grades))
 }
 
 func main() {
-	var pt1 Point = Point{11.1, 4.8}
-	fmt.Println(pt1)
-	pt1.x = 100
-	fmt.Println(pt1)
-	changeXValue(pt1)
-	fmt.Println(pt1) // <-- not changed
+	std1 := Student{"Jason", []int{11, 22, 33, 44}, true}
+	std2 := Student{"Jimmy", []int{88, 99, 42, 60}, false}
+	fmt.Println(std1.getName(), std1.getAverageGrade(), std1)
+	fmt.Println(std2.getName(), std2.getAverageGrade(), std2)
 
-	fmt.Println("-------------------")
-
-	var pt2 *Point = &Point{1.1, 2.1}
-	fmt.Println(pt2, *pt2)
-	pt2.x = 99.1
-	// <--- didnt need to deref for structs!
-	fmt.Println(pt2, *pt2)
-	changeXValue2(pt2)
-	fmt.Println(pt2, *pt2)
-
-	fmt.Println("-------------------")
-
-	var myCircle *Circle = &Circle{4.2, Point{11.1, 11.2}}
-	fmt.Println(myCircle)
-	changeXValue(myCircle.center)
-	fmt.Println(myCircle)
-
-	fmt.Println("-------------------")
-
-	var myCircle2 *Circle2 = &Circle2{4.2001, &Point{11.1001, 11.2001}}
-	fmt.Println(myCircle2)
-	fmt.Println(myCircle2, myCircle2.radius, myCircle2.center)
-	changeXValue2(myCircle2.center)
-	fmt.Println(myCircle2.center) // <--- changes!!
-
-	fmt.Println("-------------------")
-
-	myCircle3 := &Circle3{9.001, &Point{4.002, 5.001}}
-	fmt.Println(myCircle3, myCircle3.x, myCircle3.y)
-	// changeXValue2(myCircle3)
-	// <--- error: mismatched argument types
-	// <--- from *Circle(arg) to *Point(param def)
-
-	myCircle4 := Circle3{9.001, &Point{4.002, 5.001}}
-	fmt.Println(myCircle4)
-	changeRadius(&myCircle4)
-	fmt.Println(myCircle4)
+	std1.setGrades([]int{66, 77, 88})
+	fmt.Println(std1.getName(), std1.getAverageGrade(), std1)
 }
