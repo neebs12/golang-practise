@@ -3,22 +3,22 @@ package main
 import "fmt"
 
 func main() {
-	counter := 0
-	foo := make([][]int, 3)
-	// gives [[] [] []]
 
-	for i := 0; i < len(foo); i += 1 {
-		innerAry := make([]int, i+1)
-		foo[i] = innerAry
-		for j := 0; j < len(innerAry); j += 1 {
-			innerAry[j] = counter
-			counter += 1
-		}
+	for ind, val := range [3]int{11, 22, 33} {
+		fmt.Println(ind, val)
 	}
 
-	fmt.Println(foo)
+	for ind := range make([]int, 3) {
+		fmt.Println(ind)
+	}
 
-	// make 2D, filled with values
-	// [[0], [1, 2], [3, 4, 5]]
+	mp := map[string]float32{"height": 1.79, "temp": 14.3}
+	for key, val := range mp {
+		fmt.Println(key, val)
+	}
 
+	for _, unicode := range "jason" {
+		fmt.Println(unicode)
+		fmt.Printf("unicode is of type %T\n", unicode) // int32
+	}
 }
