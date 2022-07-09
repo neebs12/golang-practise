@@ -2,25 +2,23 @@ package main
 
 import "fmt"
 
-type human struct{}
-
-func (h human) greet(str string) {
-	fmt.Printf("Hello, I hope we have found ourselves in a good place in this rocky planet, here take this word: %v\n", str)
-}
-
-type modernHuman struct {
-	*human
-}
-
-func (mh modernHuman) greet(flt float32) {
-	fmt.Printf("Good day to you! We aren't primitives! Take this more sophisticated number! %.2f\n", flt)
+func whatAmI(val interface{}) {
+	switch val := val.(type) {
+	case int:
+		fmt.Println("I am an integer")
+	case bool:
+		fmt.Println("I am a boolean")
+	case string:
+		fmt.Println("I am a string")
+	default:
+		fmt.Printf("I cant tell what %T is\n", val)
+	}
 }
 
 func main() {
-	h := &human{}
-	h.greet("flabergasted")
-	mh := &modernHuman{}
-	mh.greet(2)
-	mh.greet(2.2)
-	// mh.greet("Hello")  <--- not allowed, not really overloaded
+	whatAmI(100)
+	whatAmI(true)
+	whatAmI(!!true)
+	whatAmI("hello")
+	whatAmI(1.1)
 }
