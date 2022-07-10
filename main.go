@@ -2,35 +2,23 @@ package main
 
 import (
 	"fmt"
+	"sort"
 )
 
-type argError struct {
-	arg  int
-	prob string
-}
+type byLength []string
 
-// Error method on argError struct required to fulfull the
-// -- error interface!
-func (a *argError) Error() string {
-	return fmt.Sprintf("%d --- %s", a.arg, a.prob)
-	// <--- ohh snap, so this is the "message"/"value" assc.
-	// -- with the error object!
+func (s byLength) Len() int {
+	return len(s)
 }
-
-func f2(num int) (int, error) {
-	if num == 42 {
-		return num, &argError{num, "is not the answer to life!"}
-	}
-	return num, nil
+func (s byLength) Swap(i, j int) {
+	s[i], s[j] = s[j], s[i]
+}
+func (s byLength) Less(i, j int) bool {
+	return len(s[i]) < len(s[j])
 }
 
 func main() {
-	arr := [3]int{11, 42, 89}
-	for _, val := range arr {
-		if r, e := f2(val); e != nil {
-			fmt.Println("f2 failed", e)
-		} else {
-			fmt.Println("f2 success", r)
-		}
-	}
+	fruits := []string{"peach", "banana", "kiwi"}
+	sort.Sort(byLength(fruits))
+	fmt.Println(fruits)
 }
