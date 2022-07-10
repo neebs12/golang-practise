@@ -1,20 +1,21 @@
 package main
 
-import (
-	"fmt"
-	"math/rand"
-	"sort"
-)
+import "fmt"
+
+func getIntSum(nums ...int) int {
+	// nums is a collection array/slice, does not matter?
+	sum := 0
+	for _, val := range nums {
+		sum += val
+	}
+	return sum
+}
 
 func main() {
-	scores := make([]int, 100)
-	for i := 0; i < 100; i++ {
-		scores[i] = int(rand.Int31n(1000))
-		// also, not seeded!
-	}
-	sort.Ints(scores)
+	foo := []int{11, 11, 22, 33, 44}
+	fmt.Println(getIntSum(foo...)) // <--- yes, 121
+	// <--- ok slices
 
-	worst := make([]int, 5)
-	copy(worst[1:], scores[:5])
-	fmt.Println(worst)
+	bar := [5]int{11, 11, 22, 33, 44}
+	fmt.Println(getIntSum(bar...)) // <--- no
 }
