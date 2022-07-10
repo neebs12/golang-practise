@@ -1,21 +1,36 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
-func getIntSum(nums ...int) int {
-	// nums is a collection array/slice, does not matter?
-	sum := 0
-	for _, val := range nums {
-		sum += val
+type argError struct {
+	arg  int
+	prob string
+}
+
+// Error method on argError struct required to fulfull the
+// -- error interface!
+func (a *argError) Error() string {
+	return fmt.Sprintf("%d --- %s", a.arg, a.prob)
+	// <--- ohh snap, so this is the "message"/"value" assc.
+	// -- with the error object!
+}
+
+func f2(num int) (int, error) {
+	if num == 42 {
+		return num, &argError{num, "is not the answer to life!"}
 	}
-	return sum
+	return num, nil
 }
 
 func main() {
-	foo := []int{11, 11, 22, 33, 44}
-	fmt.Println(getIntSum(foo...)) // <--- yes, 121
-	// <--- ok slices
-
-	bar := [5]int{11, 11, 22, 33, 44}
-	fmt.Println(getIntSum(bar...)) // <--- no
+	arr := [3]int{11, 42, 89}
+	for _, val := range arr {
+		if r, e := f2(val); e != nil {
+			fmt.Println("f2 failed", e)
+		} else {
+			fmt.Println("f2 success", r)
+		}
+	}
 }
