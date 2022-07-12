@@ -1,24 +1,21 @@
 package main
 
 import (
-	"fmt"
-	"sort"
+	"math"
 )
 
-type byLength []string
-
-func (s byLength) Len() int {
-	return len(s)
-}
-func (s byLength) Swap(i, j int) {
-	s[i], s[j] = s[j], s[i]
-}
-func (s byLength) Less(i, j int) bool {
-	return len(s[i]) < len(s[j])
-}
+func GetMiddle(s string) string {
+	rr := []rune(s)
+	var midIndNum float64 = float64(len(rr)) / 2 // could be n.5(even) or n(odd)
+	high, low := math.Ceil(midIndNum), math.Floor(midIndNum)
+	if high == low {
+		// is odd, can take midIndNum
+		return string(s[int(midIndNum)])
+	} else {
+		return s[int(low) : int(low)+2]
+	}
+} // trying out: https://www.codewars.com/kata/56747fd5cb988479af000028/train/go
 
 func main() {
-	fruits := []string{"peach", "banana", "kiwi"}
-	sort.Sort(byLength(fruits))
-	fmt.Println(fruits)
+
 }
