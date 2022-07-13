@@ -1,21 +1,30 @@
 package main
 
 import (
-	"math"
+	"fmt"
+	"sort"
+	"strings"
 )
 
-func GetMiddle(s string) string {
-	rr := []rune(s)
-	var midIndNum float64 = float64(len(rr)) / 2 // could be n.5(even) or n(odd)
-	high, low := math.Ceil(midIndNum), math.Floor(midIndNum)
-	if high == low {
-		// is odd, can take midIndNum
-		return string(s[int(midIndNum)])
-	} else {
-		return s[int(low) : int(low)+2]
+func TwoToOne(s1 string, s2 string) string {
+	combined := s1 + s2
+	// then these are sorted according to unicode
+	sliceCombined := strings.Split(combined, "")
+	// then is sorted lexicographically
+	// sorted - mutated due to being a slice
+	sort.Strings(sliceCombined)
+	// then, only concat the string if is not already included
+	resultStr := ""
+	for _, val := range sliceCombined {
+		// val is a single character string
+		if !strings.Contains(resultStr, val) {
+			resultStr += val
+		}
 	}
-} // trying out: https://www.codewars.com/kata/56747fd5cb988479af000028/train/go
+	return resultStr
+}
 
 func main() {
-
+	fmt.Println("jason aricheta")
+	fmt.Println(TwoToOne("jason", "aricheta"))
 }
