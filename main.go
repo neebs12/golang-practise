@@ -2,63 +2,73 @@ package main
 
 import (
 	"fmt"
+	"sort"
 	"strconv"
+	"strings"
 )
 
-func CountBits(num uint) int {
-	// convert to binary
-	// init `binStr` to ""
-	// init `runningInt` to `num`
-	// while loop, while runningInt != 0 or 1 (then in loop below)
-	// -- divInt = runningInt / 2
-	// -- if divInt*2 != runningInt -> binStr += "1"
-	// -- else -> binStr += "0"
-	// -- finally -> runningInt = divInt
-	// -- end iteration
-	// once converted to `binStr`, iterate over
-	// then Atoi each character str, then sum them together
-	// init `summation` to `0`
-	// for loop, interate over `binStr` with charBinStr
-	// -- equivInt init to strconv.Atoi(charBinStr)
-	// -- summation += equivInt
-	// -- end iteration
-	// return summation
-
-	binStr := ""
-	runningInt := num
-	for runningInt >= 1 {
-		// fmt.Println(runningInt)
-		divInt := runningInt / 2
-		if divInt*2 != runningInt {
-			binStr = "1" + binStr // reversing sequence
-		} else {
-			binStr = "0" + binStr
+func intFromWord(word string) int {
+	resultInt := 0
+	for _, rr := range word {
+		if strings.Contains("1234567890", string(rr)) {
+			resultInt, _ = strconv.Atoi(string(rr))
+			break
 		}
-		runningInt = divInt // div2 down
 	}
+	return resultInt
+}
 
-	// cannot have a 'final binary num at 0'
-	// if binStr[0] == '0' {
-	// 	binStr = "1" + binStr
-	// }
+// func Order(sentence string) string {
+// 	if sentence == "" {
+// 		return ""
+// 	}
 
-	summation := 0
-	for _, charBinStr := range binStr {
-		val, _ := strconv.Atoi(string(charBinStr))
-		summation += val
-	}
+// 	intSli := make([]int, 0) // len, cap 1
+// 	sentenceSli := strings.Split(sentence, " ")
+// 	for _, word := range sentenceSli {
+// 		// extract the number from the `word`
+// 		intSli = append(intSli, intFromWord(word))
+// 	}
 
-	fmt.Printf("for %d: the final value is %d: the binary is: %s, summation is: %d\n", num, runningInt, binStr, summation)
-	// fmt.Println(binStr)
+// 	sort.Ints(intSli)
+// 	strSli := make([]string, 0)
+// 	for _, myInt := range intSli {
+// 		chosenWord := ""
+// 		for _, str := range sentenceSli {
+// 			if strings.Contains(str, strconv.Itoa(myInt)) {
+// 				chosenWord = str
+// 				break
+// 			}
+// 		}
+// 		strSli = append(strSli, chosenWord)
+// 	}
 
-	return summation
+// 	return strings.Join(strSli, " ")
+// }
+
+type byInt []string
+
+func (s byInt) Len() int {
+	return len(s)
+}
+
+func (s byInt) Swap(i, j int) {
+	s[i], s[j] = s[j], s[i]
+}
+
+func (s byInt) Less(i, j int) bool {
+	// customized logic
+	return intFromWord(s[i]) < intFromWord(s[j])
+}
+
+func Order(sentence string) string {
+	sentenceSli := strings.Split(sentence, " ")
+	sort.Sort(byInt(sentenceSli))
+	return strings.Join(sentenceSli, " ")
 }
 
 func main() {
-	CountBits(7)
-	CountBits(9)
-	CountBits(122)
-	CountBits(124)
-	CountBits(1234)
-	CountBits(2)
+	fmt.Printf(">" + Order("is2 Thi1s T4est 3a") + "\n")
+	// fmt.Printf(">" + Order2("is2 Thi1s T4est 3a") + "\n")
+	// fmt.Println("a" > "b")
 }
