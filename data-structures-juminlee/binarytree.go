@@ -30,52 +30,48 @@ func (n *Node) Insert(i int) {
 		return // terminate, no insertion required
 	}
 
-	for n != nil {
-		currKey := n.Key
-		if currKey < i {
-			// traversal to right
-			rightNode := n.Right
-			if rightNode == nil {
-				n.Right = &Node{Key: i}
-			} else {
-				rightNode.Insert(i)
-			}
-			return
-		} else if currKey > i {
-			// traversal to left
-			leftNode := n.Left
-			if leftNode == nil {
-				n.Left = &Node{Key: i}
-			} else {
-				leftNode.Insert(i)
-			}
-			return
+	currKey := n.Key
+	if currKey < i {
+		// traversal to right
+		rightNode := n.Right
+		if rightNode == nil {
+			n.Right = &Node{Key: i}
+		} else {
+			rightNode.Insert(i)
 		}
-		// case for if i already exists? use Search
+		return
+	} else if currKey > i {
+		// traversal to left
+		leftNode := n.Left
+		if leftNode == nil {
+			n.Left = &Node{Key: i}
+		} else {
+			leftNode.Insert(i)
+		}
+		return
 	}
-
 }
 
 // BinaryTree, Search, searches for a value in the binary tree
-func (b *BinaryTree) Search(i int, currNode *Node) bool {
+func (n *Node) Search(i int) bool {
 
-	if currNode == nil {
+	if n == nil {
 		return false // none is found
 	}
 
-	if currNode.Key == i {
+	if n.Key == i {
 		return true // a node is found!
 	}
 
-	currKey := currNode.Key
+	currKey := n.Key
 	if currKey < i {
 		// traverse right
-		rightNode := currNode.Right
-		return b.Search(i, rightNode)
+		rightNode := n.Right
+		return rightNode.Search(i)
 	} else if currKey > i {
 		// traverse left
-		leftNode := currNode.Left
-		return b.Search(i, leftNode)
+		leftNode := n.Left
+		return leftNode.Search(i)
 	}
 	return false
 }
@@ -100,8 +96,8 @@ func main() {
 	tree.Root.Insert(150)
 	tree.Root.Insert(400)
 	fmt.Println(tree)
-	fmt.Println(400, tree.Search(400, tree.Root))
-	fmt.Println(97, tree.Search(97, tree.Root))
-	fmt.Println(49, tree.Search(49, tree.Root))
-	fmt.Println(96, tree.Search(96, tree.Root))
+	fmt.Println(400, tree.Root.Search(400))
+	fmt.Println(97, tree.Root.Search(97))
+	fmt.Println(49, tree.Root.Search(49))
+	fmt.Println(96, tree.Root.Search(96))
 }
