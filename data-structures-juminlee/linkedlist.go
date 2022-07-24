@@ -98,9 +98,9 @@ func main() {
 	linkedList.Prepend("Janina")
 	linkedList.Prepend("Jaci")
 	linkedList.Print()
-	fmt.Println("Jaci", linkedList.Search("Jaci"))
-	fmt.Println("Geraldine", linkedList.Search("Geraldine"))
-	linkedList.Delete("Joseph") // mid deletion!
+	fmt.Println("Jaci", linkedList.Search("Jaci"))           // true
+	fmt.Println("Geraldine", linkedList.Search("Geraldine")) // false
+	linkedList.Delete("Joseph")                              // mid deletion!
 	linkedList.Print()
 	linkedList.Delete("Jaci") // head deletion
 	linkedList.Print()
