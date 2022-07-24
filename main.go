@@ -1,32 +1,74 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"sort"
+	"strconv"
+	"strings"
+)
 
-// making a linked list
-
-// Node
-// contains `key`, information inside Node
-// contains `next`, references next Node
-type Node struct {
-	key  string
-	next *Node // ptr for identical struct
+func intFromWord(word string) int {
+	resultInt := 0
+	for _, rr := range word {
+		if strings.Contains("1234567890", string(rr)) {
+			resultInt, _ = strconv.Atoi(string(rr))
+			break
+		}
+	}
+	return resultInt
 }
 
-// LinkedList
-// contains `head` ref *Node
-type LinkedList struct {
-	head *Node
+// func Order(sentence string) string {
+// 	if sentence == "" {
+// 		return ""
+// 	}
+
+// 	intSli := make([]int, 0) // len, cap 1
+// 	sentenceSli := strings.Split(sentence, " ")
+// 	for _, word := range sentenceSli {
+// 		// extract the number from the `word`
+// 		intSli = append(intSli, intFromWord(word))
+// 	}
+
+// 	sort.Ints(intSli)
+// 	strSli := make([]string, 0)
+// 	for _, myInt := range intSli {
+// 		chosenWord := ""
+// 		for _, str := range sentenceSli {
+// 			if strings.Contains(str, strconv.Itoa(myInt)) {
+// 				chosenWord = str
+// 				break
+// 			}
+// 		}
+// 		strSli = append(strSli, chosenWord)
+// 	}
+
+// 	return strings.Join(strSli, " ")
+// }
+
+type byInt []string
+
+func (s byInt) Len() int {
+	return len(s)
 }
 
-// LinkedList prepend method (adds node at the start of linked list, given data)
+func (s byInt) Swap(i, j int) {
+	s[i], s[j] = s[j], s[i]
+}
 
-// LinkedList search method (searches linked list, given data) - returns bool (true if found, false if not)
+func (s byInt) Less(i, j int) bool {
+	// customized logic
+	return intFromWord(s[i]) < intFromWord(s[j])
+}
 
-// LinkedList delete method (deletes node from linked list, given data)
-
-// func Init, initializes LinkedList
+func Order(sentence string) string {
+	sentenceSli := strings.Split(sentence, " ")
+	sort.Sort(byInt(sentenceSli))
+	return strings.Join(sentenceSli, " ")
+}
 
 func main() {
-	node := new(Node)
-	fmt.Println(node)
+	fmt.Printf(">" + Order("is2 Thi1s T4est 3a") + "\n")
+	// fmt.Printf(">" + Order2("is2 Thi1s T4est 3a") + "\n")
+	// fmt.Println("a" > "b")
 }
