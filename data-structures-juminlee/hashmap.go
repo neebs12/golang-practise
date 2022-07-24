@@ -15,9 +15,40 @@ type HashTable struct {
 	array [ArraySize]*bucket // bucket is a linked list
 }
 
-// INSERT
-// SEARCH
+// INSERT (works)
+func (h *HashTable) Insert(k string) {
+	// get index from hash
+	ind := hashIndex(k)
+	// get relevant array index, to get reference to the correct bucket
+	localBucket := h.array[ind] // is *bucket type
+	// search first
+	if localBucket.search(k) {
+		return // already exists, no need to re-insert
+	} else {
+		// is a valid unique name, therefore will be inserted accordingly
+		localBucket.insert(k)
+	}
+}
+
+// SEARCH (works)
+// -- no need for pointer receiver, but is used for consistency with other methods
+func (h *HashTable) Search(k string) bool {
+	ind := hashIndex(k)
+	return h.array[ind].search(k)
+}
+
 // DELETE
+func (h *HashTable) Delete(k string) {
+	ind := hashIndex(k)
+	referenceBucket := h.array[ind]
+	if !referenceBucket.search(k) {
+		return // trying to delete a non-existent item, return prematurely
+	} else {
+		// normally delete
+		h.array[ind].delete(k)
+	}
+
+}
 
 // bucket
 type bucket struct {
@@ -128,6 +159,24 @@ func Init() *HashTable {
 }
 
 func main() {
+	table := Init()
+
+	table.Insert("jason")  // [1]
+	table.Insert("jam")    // [6]
+	table.Insert("jimmy")  // [5]
+	table.Insert("jodie")  // [6]
+	table.Insert("graeme") // [6]
+	table.Insert("isaac")  // [3]
+	table.Insert("sotelo") // [1]
+
+	fmt.Println("jason", table.Search("jason"))
+	fmt.Println("sotelo", table.Search("sotelo"))
+	fmt.Println("geraldine", table.Search("geraldine"))
+	fmt.Println("jodie", table.Search("jodie"))
+
+	table.Delete("jodie")
+	fmt.Println("jodie", table.Search("jodie")) // is false due to missing "jodie"
+
 	// fmt.Println(hashIndex("jason"))
 	// fmt.Println(hashIndex("jam"))
 	// fmt.Println(hashIndex("jimmy"))
@@ -136,21 +185,20 @@ func main() {
 	// fmt.Println(hashIndex("isaac"))
 	// fmt.Println(hashIndex("sotelo"))
 
-	// table := Init()
 	// // then we have to fill with a group of buckets
 	// fmt.Println(table)
-	b := new(bucket)
-	b.insert("jason")
-	b.insert("jam")
-	b.insert("jimmy")
-	b.insert("joseph")
-	b.insert("geraldine")
-	fmt.Println("jason", b.search("jason"))
-	fmt.Println("jemimah", b.search("jemimah"))
-	fmt.Println("jimmy", b.search("jimmy"))
-	b.Print()
-	b.delete("geraldine")
-	b.delete("jason")
-	b.delete("jimmy")
-	b.Print()
+	// b := new(bucket)
+	// b.insert("jason")
+	// b.insert("jam")
+	// b.insert("jimmy")
+	// b.insert("joseph")
+	// b.insert("geraldine")
+	// fmt.Println("jason", b.search("jason"))
+	// fmt.Println("jemimah", b.search("jemimah"))
+	// fmt.Println("jimmy", b.search("jimmy"))
+	// b.Print()
+	// b.delete("geraldine")
+	// b.delete("jason")
+	// b.delete("jimmy")
+	// b.Print()
 }
