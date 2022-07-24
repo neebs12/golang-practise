@@ -20,34 +20,34 @@ type BinaryTree struct {
 }
 
 // BinaryTree, Insert, inserts a value at the binary tree
-func (b *BinaryTree) Insert(i int, currNode *Node) {
+func (n *Node) Insert(i int) {
 	// this section inserts values in the binary tree
 	// insertion begins at Root, then recursively tails down to the leaves
 	// where a Right or Left reference is inserted
 
 	// super local search guard will be here
-	if currNode.Key == i {
+	if n.Key == i {
 		return // terminate, no insertion required
 	}
 
-	for currNode != nil {
-		currKey := currNode.Key
+	for n != nil {
+		currKey := n.Key
 		if currKey < i {
 			// traversal to right
-			rightNode := currNode.Right
+			rightNode := n.Right
 			if rightNode == nil {
-				currNode.Right = &Node{Key: i}
+				n.Right = &Node{Key: i}
 			} else {
-				b.Insert(i, rightNode)
+				rightNode.Insert(i)
 			}
 			return
 		} else if currKey > i {
 			// traversal to left
-			leftNode := currNode.Left
+			leftNode := n.Left
 			if leftNode == nil {
-				currNode.Left = &Node{Key: i}
+				n.Left = &Node{Key: i}
 			} else {
-				b.Insert(i, leftNode)
+				leftNode.Insert(i)
 			}
 			return
 		}
@@ -90,15 +90,15 @@ func Init(k int) *BinaryTree {
 
 func main() {
 	tree := Init(100)
-	tree.Insert(101, tree.Root)
-	tree.Insert(99, tree.Root)
-	tree.Insert(97, tree.Root)
-	tree.Insert(98, tree.Root)
-	tree.Insert(73, tree.Root)
-	tree.Insert(200, tree.Root)
-	tree.Insert(250, tree.Root)
-	tree.Insert(150, tree.Root)
-	tree.Insert(400, tree.Root)
+	tree.Root.Insert(101)
+	tree.Root.Insert(99)
+	tree.Root.Insert(97)
+	tree.Root.Insert(98)
+	tree.Root.Insert(73)
+	tree.Root.Insert(200)
+	tree.Root.Insert(250)
+	tree.Root.Insert(150)
+	tree.Root.Insert(400)
 	fmt.Println(tree)
 	fmt.Println(400, tree.Search(400, tree.Root))
 	fmt.Println(97, tree.Search(97, tree.Root))
