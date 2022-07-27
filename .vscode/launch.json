@@ -9,7 +9,7 @@
       "type": "go",
       "request": "launch",
       "mode": "auto",
-      "program": "commonsense-dsa/ch14/q5.go"
+      "program": "commonsense-dsa/ch15/binary-search-tree.go"
     }
   ]
 }
