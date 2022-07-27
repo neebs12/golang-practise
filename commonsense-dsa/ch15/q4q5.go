@@ -38,13 +38,44 @@ func Insert(data int, currNode *node) {
 	// else, here found a (==) which is NOT inserted
 }
 
-// FindMaxInBst function finds the maximum value within the bst
-func FindMaxInBst(currNode *node) int {
-	if currNode.rightChild == nil {
-		return currNode.data
+// Inorder Bst Traversal - depth first, logs in ascending order
+func InOrderBSTTraversal(currNode *node) {
+	if currNode == nil {
+		return // na, base case
 	}
 
-	return FindMaxInBst(currNode.rightChild)
+	// traverse left
+	InOrderBSTTraversal(currNode.leftChild)
+
+	// then print
+	fmt.Println(currNode.data)
+
+	// then traverse right
+	InOrderBSTTraversal(currNode.rightChild)
+}
+
+// Preorder bst traversal means that we are essentially logging the path of the traversal (Println prior to the subproblem calls)
+func PreOrderBSTTraversal(currNode *node) {
+	if currNode == nil {
+		return
+	}
+
+	fmt.Println(currNode.data)
+
+	PreOrderBSTTraversal(currNode.leftChild)
+	PreOrderBSTTraversal(currNode.rightChild)
+}
+
+// Postorder bst traversal
+// -- this is logging the unwinding of the stack??
+func PostOrderTraversal(currNode *node) {
+	if currNode == nil {
+		return
+	}
+
+	PostOrderTraversal(currNode.leftChild)
+	PostOrderTraversal(currNode.rightChild)
+	fmt.Println(currNode.data)
 }
 
 type node struct {
@@ -78,5 +109,8 @@ func Init(initialData int) *BinarySearchTree {
 
 func main() {
 	b := Init(100)
-	fmt.Println(FindMaxInBst(b.root))
+
+	// InOrderBSTTraversal(b.root)
+	// PreOrderBSTTraversal(b.root)
+	PostOrderTraversal(b.root)
 }
