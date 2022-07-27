@@ -59,5 +59,4 @@ func main() {
 	fmt.Println(UniquePaths(1, 2, 0, "BEGIN")) // 1?
 	fmt.Println(UniquePaths(2, 2, 0, "BEGIN")) // 4? (curr), 2(correct)
 	fmt.Println(UniquePaths(7, 3, 0, "BEGIN")) // 84? (wrong omg), 28 is the correct answer
-
 }
