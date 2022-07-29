@@ -51,6 +51,16 @@ func UniquePaths(col, row, pathNum int, state string) int {
 	return pathRight + pathLeft
 }
 
+func BookUniquePaths(rows, columns int) int {
+	// we return 1, because if we reach the end of the walls, there is only one path left
+	// -- which is a straight line to the finish-path
+	if rows == 1 || columns == 1 {
+		return 1
+	}
+
+	return BookUniquePaths(rows-1, columns) + BookUniquePaths(rows, columns-1)
+}
+
 func main() {
 	fmt.Println(UniquePaths(0, 0, 0, "BEGIN")) // 0
 	fmt.Println(UniquePaths(1, 0, 0, "BEGIN")) // 0
@@ -59,4 +69,6 @@ func main() {
 	fmt.Println(UniquePaths(1, 2, 0, "BEGIN")) // 1?
 	fmt.Println(UniquePaths(2, 2, 0, "BEGIN")) // 4? (curr), 2(correct)
 	fmt.Println(UniquePaths(7, 3, 0, "BEGIN")) // 84? (wrong omg), 28 is the correct answer
+	fmt.Println("----Book solution----")
+	fmt.Println(BookUniquePaths(7, 3)) // 28
 }
