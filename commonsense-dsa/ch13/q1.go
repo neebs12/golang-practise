@@ -71,8 +71,9 @@ func HighestProdFromThreeElms(s MySlice) int {
 
 func main() {
 	mySlice := MySlice{
-		data: []int{111, 33, 66, 22, 100, 66, 99, 9},
+		data: []int{111, 33, 99, 66, 22, 100, 66, 99, 9},
 	}
 
 	fmt.Println(HighestProdFromThreeElms(mySlice))
+	fmt.Println(mySlice.data)
 }
